@@ -18,6 +18,12 @@ public class LoaderVOR extends A_Loader
 	@Override
 	public void load(Scanner scanner) throws IOException
 	{
-
+		String nextLine = scanner.nextLine();
+		
+		while(!(nextLine.trim().equals("")))
+		{
+			System.out.println(nextLine);
+			nextLine = scanner.nextLine();
+		}
 	}
 }

@@ -9,6 +9,13 @@ import atcsim.graphics.view.navigation.OverlayNavigation;
 
 public abstract class A_Loader 
 {	
-	public A_Loader(Map <String, A_ComponentNavaid<?>> navaids, OverlayNavigation overlay){}
+	protected Map <String, A_ComponentNavaid<?>> navaids;
+	protected OverlayNavigation overlay;
+	
+	public A_Loader(Map <String, A_ComponentNavaid<?>> navaids, OverlayNavigation overlay)
+	{
+		this.navaids = navaids;
+		this.overlay = overlay;
+	}
 	public abstract void load(Scanner scanner) throws IOException;
 }
