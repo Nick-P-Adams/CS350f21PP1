@@ -29,34 +29,33 @@ public class LoaderAirway extends A_Loader
 			
 			if(specParts[1].trim().equals("CC"))
 			{
-				Latitude latitude = new Latitude(Integer.parseInt(specParts[2].trim()), Integer.parseInt(specParts[3].trim()), Double.parseDouble(specParts[4].trim()));
-				Longitude longitude = new Longitude(Integer.parseInt(specParts[5].trim()), Integer.parseInt(specParts[6].trim()), Double.parseDouble(specParts[7].trim()));
-				Altitude altitude = new Altitude(Double.parseDouble(specParts[8].trim()));
-				CoordinateWorld3D position1 = new CoordinateWorld3D(latitude, longitude, altitude);
+				Latitude latitude = this.getLatitude(Integer.parseInt(specParts[2].trim()), Integer.parseInt(specParts[3].trim()), Double.parseDouble(specParts[4].trim()));
+				Longitude longitude = this.getLongitude(Integer.parseInt(specParts[5].trim()), Integer.parseInt(specParts[6].trim()), Double.parseDouble(specParts[7].trim()));
+				Altitude altitude = this.getAltitude(Double.parseDouble(specParts[8].trim()));
+				CoordinateWorld3D position1 = this.getPosition(latitude, longitude, altitude);
 				
-				latitude = new Latitude(Integer.parseInt(specParts[9].trim()), Integer.parseInt(specParts[10].trim()), Double.parseDouble(specParts[11].trim()));
-				longitude = new Longitude(Integer.parseInt(specParts[12].trim()), Integer.parseInt(specParts[13].trim()), Double.parseDouble(specParts[14].trim()));
-				altitude = new Altitude(Double.parseDouble(specParts[15].trim()));
-				CoordinateWorld3D position2 = new CoordinateWorld3D(latitude, longitude, altitude);
+				latitude = this.getLatitude(Integer.parseInt(specParts[9].trim()), Integer.parseInt(specParts[10].trim()), Double.parseDouble(specParts[11].trim()));
+				longitude = this.getLongitude(Integer.parseInt(specParts[12].trim()), Integer.parseInt(specParts[13].trim()), Double.parseDouble(specParts[14].trim()));
+				altitude = this.getAltitude(Double.parseDouble(specParts[15].trim()));
+				CoordinateWorld3D position2 = this.getPosition(latitude, longitude, altitude);
 				
-				 airway = new ComponentNavaidAirway(specParts[0], position1, position2);
+				 airway = new ComponentNavaidAirway(specParts[0].trim(), position1, position2);
 			}
 			else if(specParts[1].trim().equals("NC"))
 			{
-				Latitude latitude = new Latitude(Integer.parseInt(specParts[3].trim()), Integer.parseInt(specParts[4].trim()), Double.parseDouble(specParts[5].trim()));
-				Longitude longitude = new Longitude(Integer.parseInt(specParts[6].trim()), Integer.parseInt(specParts[7].trim()), Double.parseDouble(specParts[8].trim()));
-				Altitude altitude = new Altitude(Double.parseDouble(specParts[9].trim()));
-				CoordinateWorld3D position = new CoordinateWorld3D(latitude, longitude, altitude);
+				Latitude latitude = this.getLatitude(Integer.parseInt(specParts[3].trim()), Integer.parseInt(specParts[4].trim()), Double.parseDouble(specParts[5].trim()));
+				Longitude longitude = this.getLongitude(Integer.parseInt(specParts[6].trim()), Integer.parseInt(specParts[7].trim()), Double.parseDouble(specParts[8].trim()));
+				Altitude altitude = this.getAltitude(Double.parseDouble(specParts[9].trim()));
+				CoordinateWorld3D position = this.getPosition(latitude, longitude, altitude);
 				
-				airway = new ComponentNavaidAirway(specParts[0], this.navaids.get(specParts[2].trim()), position);
+				airway = new ComponentNavaidAirway(specParts[0].trim(), this.navaids.get(specParts[2].trim()), position);
 			}
 			else if(specParts[1].trim().equals("NN"))
 			{
-				airway = new ComponentNavaidAirway(specParts[0], this.navaids.get(specParts[2].trim()), this.navaids.get(specParts[3].trim()));
+				airway = new ComponentNavaidAirway(specParts[0].trim(), this.navaids.get(specParts[2].trim()), this.navaids.get(specParts[3].trim()));
 			}
 			
-			this.navaids.put(specParts[0].trim(), airway);
-			this.overlay.addNavaid(airway);
+			this.addNavaid(specParts[0].trim(), airway);
 			
 			nextLine = scanner.nextLine();
 		}

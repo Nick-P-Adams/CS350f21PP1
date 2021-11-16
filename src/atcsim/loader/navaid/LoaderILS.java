@@ -27,28 +27,27 @@ public class LoaderILS extends A_Loader
 		{
 			String[] specParts = nextLine.split(",");
 			
-			VHFFrequency frequency = new VHFFrequency(Integer.parseInt(specParts[1].trim()), Integer.parseInt(specParts[2].trim()));
-			Latitude latitude = new Latitude(Integer.parseInt(specParts[3].trim()), Integer.parseInt(specParts[4].trim()), Double.parseDouble(specParts[5].trim()));
-			Longitude longitude = new Longitude(Integer.parseInt(specParts[6].trim()), Integer.parseInt(specParts[7].trim()), Double.parseDouble(specParts[8].trim()));
-			Altitude altitude = new Altitude(Double.parseDouble(specParts[9].trim()));
+			VHFFrequency frequency = this.getVHFFrequency(Integer.parseInt(specParts[1].trim()), Integer.parseInt(specParts[2].trim()));
+			Latitude latitude = this.getLatitude(Integer.parseInt(specParts[3].trim()), Integer.parseInt(specParts[4].trim()), Double.parseDouble(specParts[5].trim()));
+			Longitude longitude = this.getLongitude(Integer.parseInt(specParts[6].trim()), Integer.parseInt(specParts[7].trim()), Double.parseDouble(specParts[8].trim()));
+			Altitude altitude = this.getAltitude(Double.parseDouble(specParts[9].trim()));
 			AngleNavigational azimuth = new AngleNavigational(Double.parseDouble(specParts[10].trim()));
 			
 			Distance beaconDistance = new Distance(Double.parseDouble(specParts[11]));
-			Altitude beaconAltitude = new Altitude(Double.parseDouble(specParts[12]));
+			Altitude beaconAltitude = this.getAltitude(Double.parseDouble(specParts[12]));
 			NavaidILSBeaconDescriptor markerOuter = new NavaidILSBeaconDescriptor(beaconDistance, beaconAltitude);
 			beaconDistance = new Distance(Double.parseDouble(specParts[13]));
-			beaconAltitude = new Altitude(Double.parseDouble(specParts[14]));
+			beaconAltitude = this.getAltitude(Double.parseDouble(specParts[14]));
 			NavaidILSBeaconDescriptor markerMiddle = new NavaidILSBeaconDescriptor(beaconDistance, beaconAltitude);
 			beaconDistance = new Distance(Double.parseDouble(specParts[15]));
-			beaconAltitude = new Altitude(Double.parseDouble(specParts[16]));
+			beaconAltitude = this.getAltitude(Double.parseDouble(specParts[16]));
 			NavaidILSBeaconDescriptor markerInner = new NavaidILSBeaconDescriptor(beaconDistance, beaconAltitude);
 			
 			
-			CoordinateWorld3D position = new CoordinateWorld3D(latitude, longitude, altitude);
+			CoordinateWorld3D position = this.getPosition(latitude, longitude, altitude);
 			ComponentNavaidILS ils = new ComponentNavaidILS(specParts[0].trim(), position, azimuth, frequency, markerOuter, markerMiddle, markerInner);
 			
-			this.navaids.put(specParts[0].trim(), ils);
-			this.overlay.addNavaid(ils);
+			this.addNavaid(specParts[0].trim(), ils);
 			
 			nextLine = scanner.nextLine();
 		}

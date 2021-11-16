@@ -26,16 +26,15 @@ public class LoaderNDB extends A_Loader
 		{
 			String[] specParts = nextLine.split(",");
 			
-			Latitude latitude = new Latitude(Integer.parseInt(specParts[2].trim()), Integer.parseInt(specParts[3].trim()), Double.parseDouble(specParts[4].trim()));
-			Longitude longitude = new Longitude(Integer.parseInt(specParts[5].trim()), Integer.parseInt(specParts[6].trim()), Double.parseDouble(specParts[7].trim()));
-			Altitude altitude = new Altitude(Double.parseDouble(specParts[8].trim()));
+			Latitude latitude = this.getLatitude(Integer.parseInt(specParts[2].trim()), Integer.parseInt(specParts[3].trim()), Double.parseDouble(specParts[4].trim()));
+			Longitude longitude = this.getLongitude(Integer.parseInt(specParts[5].trim()), Integer.parseInt(specParts[6].trim()), Double.parseDouble(specParts[7].trim()));
+			Altitude altitude = this.getAltitude(Double.parseDouble(specParts[8].trim()));
 			UHFFrequency frequency = new UHFFrequency(Integer.parseInt(specParts[1].trim()));
 			
-			CoordinateWorld3D position = new CoordinateWorld3D(latitude, longitude, altitude);
+			CoordinateWorld3D position = this.getPosition(latitude, longitude, altitude);
 			ComponentNavaidNDB ndb = new ComponentNavaidNDB(specParts[0].trim(), position, frequency);
 			
-			this.navaids.put(specParts[0].trim(), ndb);
-			this.overlay.addNavaid(ndb);
+			this.addNavaid(specParts[0].trim(), ndb);
 			
 			nextLine = scanner.nextLine();
 		}
