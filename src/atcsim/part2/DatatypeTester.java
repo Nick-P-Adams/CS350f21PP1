@@ -3,11 +3,10 @@ package atcsim.part2;
 import atcsim.datatype.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
-import org.junit.jupiter.api.Test;
-
-class DatatypeTester {
-
+public class DatatypeTester 
+{
 	@Test
 	public void testAltitude() 
 	{
@@ -35,5 +34,53 @@ class DatatypeTester {
 		altCompareTest = a1.compareTo(a2);
 		assertEquals(1, altCompareTest);
 	}
+	
+	@Test
+	public void testAttitudeYaw() 
+	{
+		AttitudeYaw y = new AttitudeYaw(10);
+		AttitudeYaw attitudeYawTest = new AttitudeYaw(0);
+		
+		//This part is testing the add method 
+		assertEquals(10, attitudeYawTest.add_(y).getAngleNavigational().getValue_());
+		
+		attitudeYawTest = new AttitudeYaw(355);
+		assertEquals(5, attitudeYawTest.add_(y).getAngleNavigational().getValue_());
+		
+		//This part is testing the subtract method
+		attitudeYawTest = new AttitudeYaw(0);
+		assertEquals(350, attitudeYawTest.subtract_(y).getAngleNavigational().getValue_());
+		
+		attitudeYawTest = new AttitudeYaw(355);
+		assertEquals(345, attitudeYawTest.subtract_(y).getAngleNavigational().getValue_());
+	}
 
+	@Test
+	public void testCoordinateWorld()
+	{
+		CoordinateWorld p1 = CoordinateWorld.KSFF;
+		CoordinateWorld p2 = new CoordinateWorld(new Latitude(1, 2, 3), new Longitude(3, 2, 1));
+		
+		//p1 equality test
+		int positionCompareTest = p1.compareTo(p1);
+		assertEquals(0, positionCompareTest);
+		
+		//p1 + p2 test. There is a very minuscule amount of precision loss from .add_() so I add a delta of 0.0000000001
+		CoordinateWorld p3 = p1.add_(p2);
+		double[] positionArrayActual = {p3.getLatitude().getDegrees(), p3.getLatitude().getMinutes(), p3.getLatitude().getSeconds(),
+										p3.getLongitude().getDegrees(), p3.getLongitude().getMinutes(), p3.getLongitude().getSeconds()};
+		double[] positionArrayExpected = {50, 41, 35, 120, 27, 31};
+		assertArrayEquals(positionArrayExpected, positionArrayActual, 0.0000000001);
+		
+		//Since the .add_() method results in a tiny amount of precision loss I am going to add the two positions 
+		//in another way and test that as well. 
+		double latDegrees = p1.getLatitude().getDegrees() + p2.getLatitude().getDegrees(),
+		       latMinutes = p1.getLatitude().getMinutes() + p2.getLatitude().getMinutes(),
+		       latSeconds = p1.getLatitude().getSeconds() + p2.getLatitude().getSeconds();
+		double longDegrees = p1.getLongitude().getDegrees() + p2.getLongitude().getDegrees(),
+			   longMinutes = p1.getLongitude().getMinutes() + p2.getLongitude().getMinutes(),
+			   longSeconds = p1.getLongitude().getSeconds() + p2.getLongitude().getSeconds();
+		double[] positionArrayActual2 = {latDegrees, latMinutes, latSeconds, longDegrees, longMinutes, longSeconds};
+		assertArrayEquals(positionArrayExpected, positionArrayActual2);
+	}
 }
