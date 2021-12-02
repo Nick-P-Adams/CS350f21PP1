@@ -10,8 +10,8 @@ public class DatatypeTester
 	@Test
 	public void testAltitude() 
 	{
-		Altitude a1 = new Altitude(1000);
-		Altitude a2 = new Altitude(200);
+		Altitude a1 = new Altitude(1000),
+				 a2 = new Altitude(200);
 		
 		double altitudeTest = a1.getValue_() + a2.getValue_();
 		assertEquals(1200, altitudeTest);
@@ -36,10 +36,25 @@ public class DatatypeTester
 	}
 	
 	@Test
+	public void testAttitudePitch()
+	{
+		AttitudePitch p = new AttitudePitch(10),
+					  attitudePitchTest = new AttitudePitch(0);
+		
+		assertEquals(10, attitudePitchTest.add_(p).getValue_());
+		
+		attitudePitchTest = new AttitudePitch(90);
+		assertEquals(100, attitudePitchTest.add_(p).getValue_());
+		
+		attitudePitchTest = new AttitudePitch(175);
+		assertEquals(-175, attitudePitchTest.add_(p).getValue_());
+	}
+	
+	@Test
 	public void testAttitudeYaw() 
 	{
-		AttitudeYaw y = new AttitudeYaw(10);
-		AttitudeYaw attitudeYawTest = new AttitudeYaw(0);
+		AttitudeYaw y = new AttitudeYaw(10),
+					attitudeYawTest = new AttitudeYaw(0);
 		
 		//This part is testing the add method 
 		assertEquals(10, attitudeYawTest.add_(y).getValue_());
@@ -58,8 +73,8 @@ public class DatatypeTester
 	@Test
 	public void testCourse()
 	{
-	  Course c = new Course(10);
-	  Course courseTest = new Course(0);
+	  Course c = new Course(10),
+			 courseTest = new Course(0);
 	  
 	  //This part is testing the add method 
 	  assertEquals(10, courseTest.add_(c).getValue_());
@@ -80,8 +95,8 @@ public class DatatypeTester
 	@Test
 	public void testCoordinateWorld()
 	{
-		CoordinateWorld p1 = CoordinateWorld.KSFF;
-		CoordinateWorld p2 = new CoordinateWorld(new Latitude(1, 2, 3), new Longitude(3, 2, 1));
+		CoordinateWorld p1 = CoordinateWorld.KSFF,
+						p2 = new CoordinateWorld(new Latitude(1, 2, 3), new Longitude(3, 2, 1));
 		
 		//p1 equality test
 		int positionCompareTest = p1.compareTo(p1);
