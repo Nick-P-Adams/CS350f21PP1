@@ -42,18 +42,40 @@ public class DatatypeTester
 		AttitudeYaw attitudeYawTest = new AttitudeYaw(0);
 		
 		//This part is testing the add method 
-		assertEquals(10, attitudeYawTest.add_(y).getAngleNavigational().getValue_());
+		assertEquals(10, attitudeYawTest.add_(y).getValue_());
 		
 		attitudeYawTest = new AttitudeYaw(355);
-		assertEquals(5, attitudeYawTest.add_(y).getAngleNavigational().getValue_());
+		assertEquals(5, attitudeYawTest.add_(y).getValue_());
 		
 		//This part is testing the subtract method
 		attitudeYawTest = new AttitudeYaw(0);
-		assertEquals(350, attitudeYawTest.subtract_(y).getAngleNavigational().getValue_());
+		assertEquals(-10, attitudeYawTest.subtract_(y).getValue_());
 		
 		attitudeYawTest = new AttitudeYaw(355);
-		assertEquals(345, attitudeYawTest.subtract_(y).getAngleNavigational().getValue_());
+		assertEquals(-15, attitudeYawTest.subtract_(y).getValue_());
 	}
+	
+	@Test
+	public void testCourse()
+	{
+	  Course c = new Course(10);
+	  Course courseTest = new Course(0);
+	  
+	  //This part is testing the add method 
+	  assertEquals(10, courseTest.add_(c).getValue_());
+			
+	  courseTest = new Course(355);
+	  assertEquals(5, courseTest.add_(c).getValue_());
+			
+	  //This part is testing the subtract method
+	  courseTest = new Course(0);
+	  assertEquals(350, courseTest.subtract_(c).getValue_());
+			
+	  courseTest = new Course(355);
+	  assertEquals(345, courseTest.subtract_(c).getValue_());
+	  //I believe the difference is that course means the intended angle for the airplane to match to meet it's course.  
+	  //Where as AttitudeYaw is the current yaw angle of the aircraft (relative to the horizon?).
+	} 
 
 	@Test
 	public void testCoordinateWorld()
