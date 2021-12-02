@@ -36,6 +36,18 @@ public class DatatypeTester
 	}
 	
 	@Test
+	public void testAngleNavigational()
+	{
+		AngleNavigational a1 = new AngleNavigational(90),
+						  a2 = new AngleNavigational(180);
+		
+		assertEquals(270, a1.reciprocate().getValue_());
+		assertEquals(0, a2.reciprocate().getValue_());
+		assertEquals(135, a1.interpolate(a2, new Scaler(0.5)).getValue_());
+		assertEquals(315, a2.interpolate(a1, new Scaler(0.5)).getValue_());
+	}
+	
+	@Test
 	public void testAttitudePitch()
 	{
 		AttitudePitch p = new AttitudePitch(10),
