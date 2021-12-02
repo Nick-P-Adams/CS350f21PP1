@@ -1,0 +1,9 @@
+//Feel free to Change whatever you guys think that seems right 
+//testCourse
+public void testCourse()
+  Course course = new Course(10);
+  Course x = new Course(0);
+  Course y = new Course(355);
+  /*Not finished yet 
+  need to add the assertEquals for the rest of the Course
+  */

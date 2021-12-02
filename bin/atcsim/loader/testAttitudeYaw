@@ -1,0 +1,14 @@
+//Feel Free to change whatever you guys would like
+//testAttitudeYaw
+
+public void testAttitudeYaw() {
+AttitudeYaw yaw = new AttitudeYaw(10);
+//The attitudeYaw that is required for testing: 0 and 355 values
+  AttitudeYaw x = new AttitudeYaw();
+  AttitudeYaw y = new AttitudeYaw(355); //the of this should be -5
+  //This part is testing the subtract method 
+  assertEquals(-10,subtract_(yaw).getValue_(),0);
+  assertEquals(-15,subtract_(yaw).getValue_(),0);
+  //This part is testing the subtract method
+  assertEquals(10,x.add_(yaw).getValue_(),0);
+  assertEquals(5,y.add_(yaw).getValue_(),0);
