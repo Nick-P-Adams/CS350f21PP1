@@ -100,8 +100,7 @@ public class DatatypeTester
 			
 	  courseTest = new Course(355);
 	  assertEquals(345, courseTest.subtract_(c).getValue_());
-	  //I believe the difference is that course means the intended angle for the airplane to match to meet it's course.  
-	  //Where as AttitudeYaw is the current yaw angle of the aircraft (relative to the horizon?).
+	  //Course is the direction the aircraft is moving in, while yaw is the direction the aircraft is facing on the horizontal plane.
 	} 
 
 	@Test
@@ -131,5 +130,42 @@ public class DatatypeTester
 			   longSeconds = p1.getLongitude().getSeconds() + p2.getLongitude().getSeconds();
 		double[] positionArrayActual2 = {latDegrees, latMinutes, latSeconds, longDegrees, longMinutes, longSeconds};
 		assertArrayEquals(positionArrayExpected, positionArrayActual2);
+	}
+
+	@Test
+	public void testCoordinateWorld3D()
+	{
+		//Test Start Coordinate.
+		CoordinateWorld p = CoordinateWorld.KSFF;
+
+		//Self Test Block
+		CoordinatePolarNavigational temp = p.calculateBearing(p);
+
+		assertEquals(0, temp.getAngle().getValue_());
+		assertEquals(0, temp.getRadiusNauticalMiles().getValue_());
+
+		//KSFF_N Test Block
+		temp = p.calculateBearing(CoordinateWorld.KSFF_N);
+
+		assertEquals(0, temp.getAngle().getValue_());
+		assertEquals(10, temp.getRadiusNauticalMiles().getValue_());
+
+		//KSFF_E Test Block
+		temp = p.calculateBearing(CoordinateWorld.KSFF_E);
+
+		assertEquals(90, temp.getAngle().getValue_());
+		assertEquals(10 , temp.getRadiusNauticalMiles().getValue_());
+
+		//KSFF_S Test Block
+		temp = p.calculateBearing(CoordinateWorld.KSFF_S);
+
+		assertEquals(180, temp.getAngle().getValue_());
+		assertEquals(10, temp.getRadiusNauticalMiles().getValue_());
+
+		//KSFF_W Test Block
+		temp = p.calculateBearing(CoordinateWorld.KSFF_W);
+
+		assertEquals(270, temp.getAngle().getValue_());
+		assertEquals(10, temp.getRadiusNauticalMiles().getValue_());
 	}
 }
