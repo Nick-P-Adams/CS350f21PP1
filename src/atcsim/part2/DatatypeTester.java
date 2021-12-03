@@ -131,7 +131,7 @@ public class DatatypeTester
 		double[] positionArrayActual2 = {latDegrees, latMinutes, latSeconds, longDegrees, longMinutes, longSeconds};
 		assertArrayEquals(positionArrayExpected, positionArrayActual2);
 	}
-
+	
 	@Test
 	public void testCoordinateWorld3D()
 	{
@@ -139,33 +139,41 @@ public class DatatypeTester
 		CoordinateWorld p = CoordinateWorld.KSFF;
 
 		//Self Test Block
-		CoordinatePolarNavigational temp = p.calculateBearing(p);
+		CoordinatePolarNavigational calculateBearingTest = p.calculateBearing(p);
 
-		assertEquals(0, temp.getAngle().getValue_());
-		assertEquals(0, temp.getRadiusNauticalMiles().getValue_());
+		assertEquals(90, calculateBearingTest.getAngle().getValue_());
+		assertEquals(0, calculateBearingTest.getRadiusNauticalMiles().getValue_());
 
 		//KSFF_N Test Block
-		temp = p.calculateBearing(CoordinateWorld.KSFF_N);
-
-		assertEquals(0, temp.getAngle().getValue_());
-		assertEquals(10, temp.getRadiusNauticalMiles().getValue_());
-
+		calculateBearingTest = p.calculateBearing(CoordinateWorld.KSFF_N);
+		assertEquals(0, calculateBearingTest.getAngle().getValue_());
+		
+		Radius r = new Radius(CoordinateWorld.KSFF_N.getLatitude().subtract_(p.getLatitude()).getValue_());
+		CoordinatePolarNavigational expected = new CoordinatePolarNavigational(new AngleNavigational(0),r);
+		assertEquals(expected.getRadiusNauticalMiles().getValue_(), calculateBearingTest.getRadiusNauticalMiles().getValue_());
+		
 		//KSFF_E Test Block
-		temp = p.calculateBearing(CoordinateWorld.KSFF_E);
-
-		assertEquals(90, temp.getAngle().getValue_());
-		assertEquals(10 , temp.getRadiusNauticalMiles().getValue_());
+		calculateBearingTest = p.calculateBearing(CoordinateWorld.KSFF_E);
+		assertEquals(90, calculateBearingTest.getAngle().getValue_());
+		
+		r = new Radius(p.getLongitude().subtract_(CoordinateWorld.KSFF_E.getLongitude()).getValue_());
+		expected = new CoordinatePolarNavigational(new AngleNavigational(90),r);
+		assertEquals(expected.getRadiusNauticalMiles().getValue_(), calculateBearingTest.getRadiusNauticalMiles().getValue_());
 
 		//KSFF_S Test Block
-		temp = p.calculateBearing(CoordinateWorld.KSFF_S);
-
-		assertEquals(180, temp.getAngle().getValue_());
-		assertEquals(10, temp.getRadiusNauticalMiles().getValue_());
+		calculateBearingTest = p.calculateBearing(CoordinateWorld.KSFF_S);
+		assertEquals(180, calculateBearingTest.getAngle().getValue_());
+		
+		r = new Radius(p.getLatitude().subtract_(CoordinateWorld.KSFF_S.getLatitude()).getValue_());
+		expected = new CoordinatePolarNavigational(new AngleNavigational(180),r);
+		assertEquals(expected.getRadiusNauticalMiles().getValue_(), calculateBearingTest.getRadiusNauticalMiles().getValue_());
 
 		//KSFF_W Test Block
-		temp = p.calculateBearing(CoordinateWorld.KSFF_W);
-
-		assertEquals(270, temp.getAngle().getValue_());
-		assertEquals(10, temp.getRadiusNauticalMiles().getValue_());
+		calculateBearingTest = p.calculateBearing(CoordinateWorld.KSFF_W);
+		assertEquals(270, calculateBearingTest.getAngle().getValue_());
+		
+		r = new Radius(CoordinateWorld.KSFF_W.getLongitude().subtract_(p.getLongitude()).getValue_());
+		expected = new CoordinatePolarNavigational(new AngleNavigational(270),r);
+		assertEquals(expected.getRadiusNauticalMiles().getValue_(), calculateBearingTest.getRadiusNauticalMiles().getValue_());
 	}
 }
